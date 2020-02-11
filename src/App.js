@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Route , NavLink } from 'react-router-dom';
 
-// Components
+// Componentss
 import HomePage from './Components/Homepage';
 
 function App() {
