@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Route , NavLink } from 'react-router-dom';
+
+// Componentss
+import HomePage from './Components/Homepage';
 
 function App() {
+
   return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <div className = 'Routes'>
+
+        <NavLink exact to = '/'>Home</NavLink>
+        <NavLink exact to = '/'>Profile</NavLink>
+        <NavLink exact to = '/'>Bookshelves </NavLink>
+        <NavLink exact to = '/'>Discover</NavLink>
+
+      </div>
+
+      {/* Routes with attatched components */}
+      <Route exact path = '/' component = { HomePage } />
+
     </div>
+
   );
+
 }
 
 export default App;
