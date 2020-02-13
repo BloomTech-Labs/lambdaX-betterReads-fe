@@ -17,7 +17,7 @@ function NavBar() {
           Profile
         </NavLink>
         <NavLink exact to="/">
-          Bookshelves{" "}
+          Bookshelves
         </NavLink>
         <NavLink exact to="/">
           Discover
