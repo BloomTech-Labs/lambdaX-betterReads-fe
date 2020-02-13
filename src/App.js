@@ -9,7 +9,7 @@ import { Security, ImplicitCallback } from "@okta/okta-react";
 import HomePage from "./Components/Homepage";
 import WithAuth from "./Components/WithAuth";
 
-// Okta config
+// Okta config object
 const config = {
   issuer: "https://dev-640497.okta.com/oauth2/default",
   redirectUri: window.location.origin + "/implicit/callback",
