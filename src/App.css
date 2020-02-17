@@ -4,7 +4,7 @@
 }
 
 html {
-  background: linear-gradient( rgb( 23 , 35 , 43 ) , rgb( 58 , 95 , 114 ) );
+  background-color: rgb( 23 , 35 , 43 );
 }
 
 .App-logo {
