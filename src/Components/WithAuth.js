@@ -77,5 +77,7 @@ export default withAuth(
       );
 
     }
+
   }
+  
 );
