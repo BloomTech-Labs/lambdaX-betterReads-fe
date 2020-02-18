@@ -7,10 +7,10 @@ const HomePage = props => {
     return(
 
         <HomeContainer>
-
+{/* 
             <Nav>
 
-            </Nav>
+            </Nav> */}
 
         </HomeContainer>
 

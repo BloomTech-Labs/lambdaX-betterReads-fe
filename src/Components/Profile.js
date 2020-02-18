@@ -237,7 +237,7 @@ const Profile = props => {
 
             <BackgroundImageContainer>
 
-                <BackgroundImage src = {user.banner_image}/>
+                <BackgroundImage src = { user.banner_image }/>
 
             </BackgroundImageContainer>
 
@@ -317,7 +317,6 @@ const Profile = props => {
 
 const ProfileContainer = styled.div`
 
-    // background: linear-gradient( rgb( 23 , 35 , 43 ) , rgb( 58 , 95 , 114 ) );
     min-height: 90vh;
     max-width: 1500px;
     margin: 0 auto;
@@ -506,7 +505,7 @@ const Activity = styled.div`
     width: 66%;
     justify-content: center;
     border: 1px solid white;
-    min-height: 50vh;
+    min-height: 100vh;
     margin-bottom: 50px;
 
 `;

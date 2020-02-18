@@ -1,7 +1,9 @@
 // src/Home.js
 
 import React, { Component } from "react";
+// var OktaAuth = require('@okta/okta-auth-js');
 import { withAuth } from "@okta/okta-react";
+import styled from 'styled-components';
 
 // const info = {
 //   oktaDomain: 'dev-640497.okta.com',
