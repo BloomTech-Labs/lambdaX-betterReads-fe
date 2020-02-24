@@ -10,11 +10,17 @@ import WithAuth from "./Components/WithAuth";
 import NavBar from "./Components/NavBar";
 import Profile from "./Components/Profile";
 
+function onAuthRequired({ history }) {
+  history.push('/login');
+}
+
 // Okta config object
 const config = {
-  issuer: "https://dev-640497.okta.com/oauth2/default",
-  redirectUri: window.location.origin + "/implicit/callback",
-  clientId: "0oa274tam6nSE47LW4x6",
+  url: process.env.REACT_APP_OKTA_URL,
+  issuer: process.env.REACT_APP_OKTA_ISSUER,
+  redirectUri: window.location.origin + '/implicit/callback',
+  clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
+  onAuthRequired: onAuthRequired,
   pkce: true,
 };
 
