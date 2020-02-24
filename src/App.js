@@ -1,14 +1,14 @@
-import React from "react";
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
-import "./App.css";
+import React from 'react';
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import './App.css';
 // Okta
-import { Security, ImplicitCallback } from "@okta/okta-react";
+import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 
 // Componentss
-import HomePage from "./Components/Homepage";
-import WithAuth from "./Components/WithAuth";
-import NavBar from "./Components/NavBar";
-import Profile from "./Components/Profile";
+import HomePage from './Components/Homepage';
+import NavBar from './Components/NavBar';
+import Profile from './Components/Profile';
+import Login from './Components/Login';
 
 function onAuthRequired({ history }) {
   history.push('/login');
@@ -26,29 +26,20 @@ const config = {
 
 function App() {
   return (
-
     <div className="App">
-
       <Router>
-
-
         <Security {...config}>
-
-          <NavBar/>
+          <NavBar />
 
           {/* Loading Components based off a NavLink in NavBar */}
-          <Route path="/" exact={true} component={ HomePage } />
-          <Route path="/implicit/callback" component={ ImplicitCallback } />
-          <Route path='/Profile' component = { Profile }/>
-
+          <Route path="/" exact={true} component={HomePage} />
+          <Route path="/login" render={() => <Login baseUrl={config.url} />} />
+          <Route path="/implicit/callback" component={ImplicitCallback} />
+          <SecureRoute path="/Profile" component={Profile} />
         </Security>
-
       </Router>
-
     </div>
-
   );
-
 }
 
 export default App;
