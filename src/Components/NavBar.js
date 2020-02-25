@@ -21,7 +21,7 @@ function NavBar() {
       <NavLink exact to="/"> Bookshelves </NavLink>
       <NavLink exact to="/"> Discover </NavLink>
       <NavLink exact to="/profile"> Profile </NavLink>
-      <WithAuth/>
+      <LoginButton />
 
       <input
         value={search}
@@ -73,7 +73,7 @@ const Routes = styled.div`
 
       width: 150px;
       height: 25px;
-      dusplay: flex;
+      display: flex;
       text-align: center;
       border-radius: 5px;
       border: none;
