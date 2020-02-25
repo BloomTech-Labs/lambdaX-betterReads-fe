@@ -4,6 +4,7 @@ import WithAuth from './WithAuth';
 import LoginButton from './LoginButton';
 import BetterReadsLogo from '../Images/BetterReadsLogo.jpeg';
 import styled from 'styled-components';
+import { size , device } from '../breakpoints';
 
 function NavBar() {
   const [isAuthenticated, setAuth] = useState(false);
@@ -22,18 +23,10 @@ function NavBar() {
         Bookshelves{' '}
       </NavLink>
 
-      <NavLink exact to="/">
-        {' '}
-        Discover{' '}
-      </NavLink>
-
-      <NavLink exact to="/Profile">
-        {' '}
-        Profile{' '}
-      </NavLink>
-
-      {/* <WithAuth /> */}
-      <LoginButton />
+      <NavLink exact to="/"> Bookshelves </NavLink>
+      <NavLink exact to="/"> Discover </NavLink>
+      <NavLink exact to="/Profile"> Profile </NavLink>
+      <WithAuth/>
 
       <input
         value={search}
@@ -51,41 +44,50 @@ function NavBar() {
 }
 
 const Routes = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-wrap: wrap-reverse;
-  max-width: 100%;
-  margin: 10px 0px 10px 0px;
 
-  @media (max-width: 560px) {
-    margin: 0 auto;
+  // Mobile ( Small ) STYLES ⬇︎
+  @media screen and ${ device.mobileS } and ( max-width: ${ size.laptop } ) {
+
+    display: none;
+
   }
 
-  a {
-    padding: 10px;
-    color: white;
-    text-decoration-color: rgb(22, 35, 43);
+  // LAPTOP STYLES ⬇︎
+  @media screen and ${ device.laptop } {
 
-    .active {
-      color: red;
-    }
-  }
-
-  input {
-    width: 150px;
-    height: 25px;
     display: flex;
-    text-align: center;
-    border-radius: 5px;
-    border: none;
-    outline: none;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+    max-width: 100%;
+    margin: 10px 0px 10px 0px;
+
+    a {
+
+      padding: 10px;
+      color: white;
+      text-decoration-color: rgb(22,35,43);
+
+      .active {
+        color: red;
+      }
+
+    }
+
+    input {
+
+      width: 150px;
+      height: 25px;
+      dusplay: flex;
+      text-align: center;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+
+    }
+
   }
 
-  @media (max-width: 520px) {
-    margin: 0 auto;
-    margin-top: -50px;
-  }
 `;
 
 const ProfileImage = styled.img`
@@ -100,7 +102,7 @@ const ProfileImage = styled.img`
 const Logo = styled.img`
   height: 50px;
   width: 50px;
-  /* margin-left: 20px; */
+
 `;
 
 export default NavBar;

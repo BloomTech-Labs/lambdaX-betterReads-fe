@@ -22,9 +22,13 @@ const config = {
   clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
   onAuthRequired: onAuthRequired,
   pkce: true,
+  tokenManager: {
+    storage: 'sessionStorage'
+  }
 };
 
 function App() {
+
   return (
     <div className="App">
       <Router>
