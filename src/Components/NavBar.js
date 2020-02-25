@@ -20,7 +20,7 @@ function NavBar() {
 
       <NavLink exact to="/"> Bookshelves </NavLink>
       <NavLink exact to="/"> Discover </NavLink>
-      <NavLink exact to="/Profile"> Profile </NavLink>
+      <NavLink exact to="/profile"> Profile </NavLink>
       <WithAuth/>
 
       <input
