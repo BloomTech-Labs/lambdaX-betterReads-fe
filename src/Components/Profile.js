@@ -714,13 +714,6 @@ const BookshelvesAndActivityContainer = styled.div`
 `;
 
 const Bookshelves = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid white;
-  width: 300px;
-  color: white;
-  height: 100%;
 
     // MOBILE ( Small ) STYLES ⬇︎
     @media screen and ${ device.mobileS } {
@@ -767,7 +760,7 @@ const Bookshelves = styled.div`
     @media screen and ${ device.laptop } {
 
         display: flex;
-        flex-direction column;
+        flex-direction: column;
         align-items: center;
         border: 1px solid white;
         width: 300px;

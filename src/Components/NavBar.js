@@ -18,11 +18,6 @@ function NavBar() {
     <Routes>
       <Logo src={BetterReadsLogo} />
 
-      <NavLink exact to="/">
-        {' '}
-        Bookshelves{' '}
-      </NavLink>
-
       <NavLink exact to="/"> Bookshelves </NavLink>
       <NavLink exact to="/"> Discover </NavLink>
       <NavLink exact to="/Profile"> Profile </NavLink>
