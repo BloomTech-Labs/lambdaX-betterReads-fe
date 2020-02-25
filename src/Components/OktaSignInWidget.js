@@ -26,7 +26,7 @@ function OktaSignInWidget(props) {
     };
   }, []);
 
-  return <div />;
+  return <div ref={el} />;
 }
 
 export default withAuth(OktaSignInWidget);
