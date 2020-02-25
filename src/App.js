@@ -1,14 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import "./App.css";
+
 // Okta
-import { Security, ImplicitCallback } from "@okta/okta-react";
+import { Security, ImplicitCallback  } from "@okta/okta-react";
 
 // Componentss
 import HomePage from "./Components/Homepage";
 import WithAuth from "./Components/WithAuth";
 import NavBar from "./Components/NavBar";
 import Profile from "./Components/Profile";
+import withAuth from "@okta/okta-react/dist/withAuth";
 
 // Okta config object
 const config = {
@@ -16,9 +18,13 @@ const config = {
   redirectUri: window.location.origin + "/implicit/callback",
   clientId: "0oa274tam6nSE47LW4x6",
   pkce: true,
+  tokenManager: {
+    storage: 'sessionStorage'
+  }
 };
 
 function App() {
+
   return (
 
     <div className="App">

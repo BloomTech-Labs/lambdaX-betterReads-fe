@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { size , device } from '../breakpoints';
 
 // THIS SHOULD BE REPLACED WITH THE USERS INFO FROM STATE ONCE WE GET THE GOOGLE INFO / LOGIN WORKING
 // Simulates the info we will have once collecting data from our database:
@@ -93,6 +94,7 @@ const user = {
     bio: '',
     image: 'https://i0.wp.com/www.brainpickings.org/wp-content/uploads/2014/01/alanwatts.jpg?w=680&ssl=1',
     banner_image: 'https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    // banner_image: 'https://images.unsplash.com/photo-1462717585237-7fafe19c5448?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80',
 
     // Extras we could add to the database?
     firstName: 'Alan',
@@ -317,40 +319,92 @@ const Profile = props => {
 
 const ProfileContainer = styled.div`
 
+    // Constants ⬇︎
     min-height: 90vh;
     max-width: 1500px;
     margin: 0 auto;
 
-    h1 {
+    // MOBILE ( Small ) STYLES ⬇︎
+    @media screen and ${ device.mobileS } {
 
-        margin: 5px;
+        .Section.Profile {
+
+            position: absolute;
+            width: 125px;
+            height: 125px;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 1px solid white;
+            margin-top: -66px;
+            margin-left: 3vh;
+
+        }
+
+        .ProfilePicture {
+
+            width: 100%;
+            height: auto;
+
+        }
 
     }
 
-    p {
+    // TABLET STYLES ⬇︎
+    @media screen and ${ device.tablet } {
 
-        margin: 10px;
-        color: rgb( 171, 171, 171 );
+        .Section.Profile {
 
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 1px solid white;
+            margin-top: -75px;
+            margin-left: 25px;
+
+        }
+
+        .ProfilePicture {
+
+            width: 100%;
+            height: auto;
+
+        }
     }
 
-    .Section.Profile {
+    // LAPTOP STYLES ⬇︎
+    @media screen and ${ device.laptop } {
 
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        overflow: hidden;
-        border-radius: 50%;
-        border: 1px solid white;
-        margin-top: -100px;
-        margin-left: 50px;
 
-    }
+        h1 {
+            margin: 5px;
+        }
 
-    .ProfilePicture {
+        p {
+            margin: 10px;
+            color: rgb( 171, 171, 171 );
+        }
 
-        width: 100%;
-        height: auto;
+        .Section.Profile {
+
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 1px solid white;
+            margin-top: -100px;
+            margin-left: 50px;
+
+        }
+
+        .ProfilePicture {
+
+            width: 100%;
+            height: auto;
+
+        }
 
     }
 
@@ -358,88 +412,297 @@ const ProfileContainer = styled.div`
 
 const BackgroundImageContainer = styled.div`
 
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    // MOBILE ( Small ) STYLES ⬇︎
+    @media screen and ${ device.mobileS } {
+
+        width: 100%;
+        overflow: hidden;
+
+    }
+
+    // TABLET STYLES ⬇︎
+    @media screen and ${ device.tablet } {
+
+        width: 100%;
+        height: auto;
+
+    }
+
+    // LAPTOP STYLES ⬇︎
+    @media screen and ${ device.laptop } {
+
+        width: 100%;
+        height: 400px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
 
 `;
 
 const BackgroundImage = styled.img`
 
-    width: auto;
-    height: auto;
-    min-height: 400px;
+    // MOBILE ( Small ) STYLES ⬇︎
+    @media screen and ${ device.mobileS } {
+
+        width: auto;
+        height: 300px;
+
+    }
+
+    // TABLET STYLES ⬇︎
+    @media screen and ${ device.tablet } {
+
+        width: 100%;
+        height: auto;
+
+    }
+
+    // LAPTOP STYLES ⬇︎
+    @media screen and ${ device.laptop } {
+
+        width: auto;
+        height: auto;
+        min-height: 400px;
+
+    }
 
 `;
 
 const UserInfoContainer = styled.div`
 
-    display: flex;
-    margin: 0 auto;
-    margin-left: 300px;
-    justify-content: space-between;
-    margin-bottom: 50px;
+    // MOBILE ( Small ) STYLES ⬇︎
+    @media screen and ${ device.mobileS } and ( max-width: ${ size.mobileL } ) {
 
-    .Section {
-
+        display: flex;
+        flex-wrap: wrap;
         color: white;
 
+        .Section.User {
+            
+            width: 90%;
+            margin: 0 auto;
+            border-bottom: 1px solid white;
+            
+            .Name {
+
+                margin-top: 0px;
+                margin-bottom: 0px;
+                margin-left: 165px;
+
+            }
+
+            .Location {
+
+                margin-top: 0px;
+                margin-left: 165px;
+
+            }
+
+        }
+
+        .Section.Social {
+
+            display: flex;
+            width: 50%;
+            justify-content: space-evenly;
+            align-items: center;
+
+            h1 {
+                margin: 0px;
+            }
+
+            p {
+                margin: 0px;
+                color: rgb( 171, 171, 171 );
+            }
+        }
+
+        .Section.Buttons {
+
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            
+            button {
+
+                font-size: 18px;
+                width: 100px;
+                margin: 5px;
+                border-radius: 5px;
+
+            }
+
+            button.Follow {
+
+                background-color: rgb(105,121,248);
+                border: 1px solid rgb(105,121,248);
+
+            }
+
+            button.Message {
+
+                border: 1px solid rgb(105,121,248);
+
+            }
+
+        }
+
     }
 
-    .Section.User {
-
-        width: 200px;
-
-    }
-
-    .Section.Social {
+    // TABLET STYLES ⬇︎
+    @media screen and ${ device.mobileL } and ( max-width: ${ size.laptop } )  {
 
         display: flex;
-        width: 400px;
-        justify-content: space-evenly;
-
-    }
-
-    .Buttons {
-
-        display: flex;
-        width: 400px;
-        justify-content: space-evenly;
+        margin: 0 auto;
+        margin-left: 200px;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        margin-bottom: 50px;
+        border: none;
         align-items: center;
-        transition: .5s;
 
-        button {
+        .Section {
 
-            font-size: 25px;
-            height: 50px;
-            min-width: 150px;
-            border-radius: 10px;
-            border: 1px solid rgb(105,121,248);
+            color: white;
+            width: 30%;
 
         }
 
-        button.Follow {
+        .Section.User {
+        
+            margin: 0 auto;
+            
+            .Name {
 
-            background-color: rgb(105,121,248);
+                margin: 0px;
+
+            }
+
+            .Location {
+
+                margin: 0px;
+                color: rgb( 171, 171, 171 );
+
+            }
 
         }
 
-        button.Message {
+        .Section.Social {
 
-            // border: 1px solid rgb(105,121,248);
+            display: flex;
+            width: 50%;
+            justify-content: space-evenly;
+            align-items: center;
+
+            h1 {
+                margin: 0px;
+            }
+
+            p {
+                margin: 0px;
+                color: rgb( 171, 171, 171 );
+            }
+        }
+
+        .Section.Buttons {
+
+            width: 45%;
+            display: flex;
+            justify-content: space-batween;
+            align-items: center;
+            
+            button {
+
+                font-size: 18px;
+                width: 100px;
+                margin: 5px;
+                border-radius: 5px;
+
+            }
+
+            button.Follow {
+
+                background-color: rgb(105,121,248);
+                border: 1px solid rgb(105,121,248);
+
+            }
+
+            button.Message {
+
+                border: 1px solid rgb(105,121,248);
+
+            }
 
         }
 
-        button:hover {
+    }
 
-            cursor: pointer;
-            border: 1px solid rgb(33,33,33);
+    // LAPTOP STYLES ⬇︎
+    @media screen and ${ device.laptop } {
+
+        display: flex;
+        margin: 0 auto;
+        margin-left: 250px;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        margin-bottom: 50px;
+        border: none;
+        width: 75%;
+        align-items: center;
+
+        .Section {
+
+            color: white;
+            width: 30%;
+
+        }
+
+        .Section.Social {
+
+            display: flex;
+            width: 400px;
+            justify-content: space-evenly;
+
+        }
+
+        .Buttons {
+
+            display: flex;
+            width: 400px;
+            justify-content: space-evenly;
+            align-items: center;
             transition: .5s;
 
+            button {
+
+                font-size: 25px;
+                height: 50px;
+                min-width: 100px;
+                border-radius: 10px;
+                border: 1px solid rgb(105,121,248);
+
+            }
+
+            button.Follow {
+
+                background-color: rgb(105,121,248);
+
+            }
+
+            button:hover {
+
+                cursor: pointer;
+                border: 1px solid rgb(33,33,33);
+                transition: .5s;
+
+            }
         }
+
     }
 
 `;
@@ -447,66 +710,158 @@ const UserInfoContainer = styled.div`
 
 const BookshelvesAndActivityContainer = styled.div`
 
-    display: flex;
-    width: 90%;
-    margin: 0 auto;
-    justify-content: space-between;
+    // MOBILE ( Small ) STYLES ⬇︎
+    @media screen and ${ device.mobileS } {
+        
+        display: flex;
+        flex-direction: column;
+        
+    }
+
+    // TABLET STYLES ⬇︎
+    @media screen and ${ device.tablet } {
+        
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 20px;
+        
+    }
+
+    // LAPTOP STYLES ⬇︎
+    @media screen and ${ device.laptop } {
+
+        display: flex;
+        width: 90%;
+        margin: 0 auto;
+        justify-content: space-between;
+
+    }
 
 `;
 
 const Bookshelves = styled.div`
 
-    display: flex;
-    flex-direction column;
-    align-items: center;
-    border: 1px solid white;
-    width: 300px;
-    color: white;
-    height: 100%;
+    // MOBILE ( Small ) STYLES ⬇︎
+    @media screen and ${ device.mobileS } {
 
-    h2 {
+        width: 90%;
+        margin: 0 auto;
+        border: 1px solid white;
+        margin-top: 10px;
+        color: white;
 
-        padding: 10px 0px 10px 0px;
-        margin: 0px;
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0.2);
+        h2 {
 
-    };
-
-    .SingleBookshelf {
-
-        display: flex;
-        justify-content: space-between;
-        width: 80%;
-        margin: 10px 0px 10px 0px;
-        border-bottom: 1px solid white;
-
-        p {
-
-            color: white;
+            margin: 0px;
+            font-size: 18px;
+            padding: 10px 0px 10px 0px;
+            background-color: rgba(255, 255, 255, 0.2);
 
         }
 
-    };
+        .SingleBookshelf {
 
-    .SingleBookshelf:hover {
+            display: flex;
+            width: 90%;
+            margin: 0 auto;
+            justify-content: space-between;
+            border-bottom: 1px solid white;
+            padding: 0px 10px 0px 10px;
+            margin-bottom: 10px;
 
-        background-color:rgba(255, 255, 255, 0.2);
-        transition: .5s;
-        cursor: pointer;
+        }
 
-    };
+    }
+
+    // TABLET STYLES ⬇︎
+    @media screen and ${ device.tablet } {
+
+        width: 30%;
+        height: 100%;
+        margin: 0px;
+
+    }
+
+    // LAPTOP STYLES ⬇︎
+    @media screen and ${ device.laptop } {
+
+        display: flex;
+        flex-direction column;
+        align-items: center;
+        border: 1px solid white;
+        width: 300px;
+        color: white;
+        height: 100%;
+
+        h2 {
+
+            padding: 10px 0px 10px 0px;
+            margin: 0px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+
+        };
+
+        .SingleBookshelf {
+
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin: 10px 0px 10px 0px;
+            border-bottom: 1px solid white;
+
+            p {
+
+                color: white;
+
+            }
+
+        };
+
+        .SingleBookshelf:hover {
+
+            background-color:rgba(255, 255, 255, 0.2);
+            transition: .5s;
+            cursor: pointer;
+
+        };
+
+    }
 
 `;
 
 const Activity = styled.div`
 
-    display: flex;
-    width: 66%;
-    justify-content: center;
-    border: 1px solid white;
-    min-height: 100vh;
-    margin-bottom: 50px;
+    // MOBILE ( Small ) STYLES ⬇︎
+    @media screen and ${ device.mobileS } {
+
+        width: 90%;
+        margin: 0 auto;
+        min-height: 60vh;
+
+    }
+
+    // TABLET STYLES ⬇︎
+    @media screen and ${ device.tablet } {
+
+        width: 60%;
+
+    }
+
+    // LAPTOP STYLES ⬇︎
+    @media screen and ${ device.laptop } {
+
+        display: flex;
+        width: 66%;
+        justify-content: center;
+        border: 1px solid white;
+        min-height: 100vh;
+        margin-bottom: 50px;
+
+    }
 
 `;
 

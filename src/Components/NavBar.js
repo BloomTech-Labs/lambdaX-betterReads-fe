@@ -3,6 +3,7 @@ import { Route, NavLink } from "react-router-dom";
 import WithAuth from "./WithAuth";
 import BetterReadsLogo from '../Images/BetterReadsLogo.jpeg'
 import styled from "styled-components";
+import { size , device } from '../breakpoints';
 
 function NavBar() {
 
@@ -22,11 +23,8 @@ function NavBar() {
       <Logo src = { BetterReadsLogo }/>
 
       <NavLink exact to="/"> Bookshelves </NavLink>
-
       <NavLink exact to="/"> Discover </NavLink>
-
       <NavLink exact to="/Profile"> Profile </NavLink>
-
       <WithAuth/>
 
       <input
@@ -44,44 +42,47 @@ function NavBar() {
 
 const Routes = styled.div`
 
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-wrap: wrap-reverse;
-  max-width: 100%;
-  margin: 10px 0px 10px 0px;
+  // Mobile ( Small ) STYLES ⬇︎
+  @media screen and ${ device.mobileS } and ( max-width: ${ size.laptop } ) {
 
-  @media (max-width: 560px) { 
-    margin: 0 auto;
+    display: none;
+
   }
 
-  a {
+  // LAPTOP STYLES ⬇︎
+  @media screen and ${ device.laptop } {
 
-    padding: 10px;
-    color: white;
-    text-decoration-color: rgb(22,35,43);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+    max-width: 100%;
+    margin: 10px 0px 10px 0px;
 
-    .active {
-      color: red;
+    a {
+
+      padding: 10px;
+      color: white;
+      text-decoration-color: rgb(22,35,43);
+
+      .active {
+        color: red;
+      }
+
     }
 
-  }
+    input {
 
-  input {
+      width: 150px;
+      height: 25px;
+      dusplay: flex;
+      text-align: center;
+      border-radius: 5px;
+      border: none;
+      outline: none;
 
-    width: 150px;
-    height: 25px;
-    dusplay: flex;
-    text-align: center;
-    border-radius: 5px;
-    border: none;
-    outline: none;
+    }
 
-  }
-
-  @media (max-width: 520px) { 
-    margin: 0 auto;
-    margin-top: -50px;
   }
 
 `;
@@ -101,7 +102,6 @@ const Logo = styled.img`
 
   height: 50px;
   width: 50px;
-  // margin-left: 20px;
 
 `;
 

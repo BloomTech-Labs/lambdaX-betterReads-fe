@@ -6,7 +6,7 @@
 // Laptop L - 1440px
 // 4K - 2560px
 
-const size = {
+export const size = {
   mobileS: "320px",
   mobileM: "375px",
   mobileL: "425px",

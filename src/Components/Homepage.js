@@ -7,10 +7,8 @@ const HomePage = props => {
     return(
 
         <HomeContainer>
-{/* 
-            <Nav>
 
-            </Nav> */}
+            <h1>Home</h1>
 
         </HomeContainer>
 
