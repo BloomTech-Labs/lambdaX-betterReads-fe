@@ -264,7 +264,7 @@ const Profile = (props) => {
         <Bookshelves>
           <h2>{user.firstName}'s Bookshelves</h2>
           {user.user_bookshelves.map((book) => (
-            <div className="SingleBookshelf">
+            <div className="SingleBookshelf" key={book.shelf_name}>
               <p>{book.shelf_name}</p>
               <p>{book.bookshelf_books.length}</p>
             </div>
