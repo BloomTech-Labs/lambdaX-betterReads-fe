@@ -7,13 +7,19 @@ function OktaSignInWidget(props) {
   const el = useRef(null);
 
   useEffect(() => {
+    console.log('el: ', el);
     const widget = new OktaSignIn({
+      authScheme: 'SESSION',
       baseUrl: props.baseUrl,
       authParams: {
         pkce: true,
       },
+      features: {
+        registration: true,
+      },
     });
-    widget.renderEl({ el }, props.onSuccess, props.onError);
+    console.log('widget: ', widget);
+    widget.renderEl({ el: el.current }, props.onSuccess, props.onError);
 
     return function cleanup() {
       widget.remove();
