@@ -1,751 +1,537 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { size , device } from '../breakpoints';
-
-// THIS SHOULD BE REPLACED WITH THE USERS INFO FROM STATE ONCE WE GET THE GOOGLE INFO / LOGIN WORKING
-// Simulates the info we will have once collecting data from our database:
-
-// note "Batteries Included": 
-//      I followed the database diagram to be accurate without using the database: https://dbdiagram.io/d/5e28d3619e76504e0ef08ed5
-//      Styled using the wireframe: https://www.figma.com/file/LN9bPENjN2JU8NNRWjfsE5/Better-Reads?node-id=0%3A1
-
-
-// PROPOSAL: Could we store the isbn number of the book in the "bookshelf_book" table to reduce a layer of abstaction?
-// also making the books an array with all of them to get the length for the profile bookshelf page
-
-// We could go from this:
-
-// ...
-// user_bookshelves: [
-
-//     {
-//         id: 1, // Primary Key
-//         shelf_name: 'Plilosophy',
-//         user_id: 1,
-//         user_type: 'Creator',
-
-//         bookshelf_book: {
-//             id: 1,
-//             book_id: 1,
-//             bookshelf_id: 1,
-
-//             book: {
-//                 id: 1,
-//                 isbn: 1253
-//             }
-//         },
-
-//         bookshelf_book: {
-//             id: 2,
-//             book_id: 2,
-//             bookshelf_id: 1,
-
-//             book: {
-//                 id: 2,
-//                 isbn: 8723
-//             }
-//         }
-//     }
-// ]
-
-// ------------------------------------------------------
-
-// To This:
-
-// ...
-// const user_bookshelves = [
-
-//     {
-//         id: 1, // Primary Key
-//         shelf_name: 'Plilosophy',
-//         user_id: 1,
-//         user_type: 'Creator',
-
-//         bookshelf_book: [
-
-//             {
-//                 id: 1,
-//                 book_id: 1,
-//                 bookshelf_id: 1,
-//                 isbn: 1253
-//             },
-//             {
-//                 id: 2,
-//                 book_id: 2,
-//                 bookshelf_id: 1,
-//                 isbn: 8723
-//             }
-//         ],
-//     }
-// ]
-
-// --------------
-// METHD: Get    |
-// Table: Users  |
-// --------------
+import { size, device } from "../breakpoints";
 
 const user = {
+  id: 1, // Primary Key
+  username: "AWatts",
+  email: "AlanWatts@gmail.com",
+  password: "PhilosophyIsCool100",
+  location: "Austin",
+  bio: "",
+  image:
+    "https://i0.wp.com/www.brainpickings.org/wp-content/uploads/2014/01/alanwatts.jpg?w=680&ssl=1",
+  banner_image:
+    "https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  // banner_image: 'https://images.unsplash.com/photo-1462717585237-7fafe19c5448?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80',
 
-    id: 1, // Primary Key
-    username: 'AWatts',
-    email: 'AlanWatts@gmail.com',
-    password: 'PhilosophyIsCool100',
-    location: 'Austin',
-    bio: '',
-    image: 'https://i0.wp.com/www.brainpickings.org/wp-content/uploads/2014/01/alanwatts.jpg?w=680&ssl=1',
-    banner_image: 'https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    // banner_image: 'https://images.unsplash.com/photo-1462717585237-7fafe19c5448?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80',
+  // Extras we could add to the database?
+  firstName: "Alan",
+  lastName: "Watts",
+  following: 1,
+  followers: 279,
 
-    // Extras we could add to the database?
-    firstName: 'Alan',
-    lastName: 'Watts',
-    following: 1,
-    followers: 279,
+  // All the users bokshelves they have created ⬇︎
+  user_bookshelves: [
+    // ORIGINAL
+    // {
 
-    // All the users bokshelves they have created ⬇︎
-    user_bookshelves: [
+    //     id: 1, // Primary Key
+    //     shelf_name: 'Plilosophy',
+    //     user_id: 1,
+    //     user_type: 'Creator', // Idea💡: we could use the values Creator / Author or Viewer / Reader ( for editing privileges )
 
-        // ORIGINAL
-        // {
+    //     // Books Inside the bookshelf ⬇︎
+    //     bookshelf_book: {
 
-        //     id: 1, // Primary Key
-        //     shelf_name: 'Plilosophy',
-        //     user_id: 1,
-        //     user_type: 'Creator', // Idea💡: we could use the values Creator / Author or Viewer / Reader ( for editing privileges )
+    //         id: 1, // Primary Key
+    //         book_id: 1,
+    //         bookshelf_id: 1,
 
-        //     // Books Inside the bookshelf ⬇︎
-        //     bookshelf_book: {
+    //         book: {
 
-        //         id: 1, // Primary Key
-        //         book_id: 1,
-        //         bookshelf_id: 1,
+    //             id: 1, // Primary Key
+    //             isbn: 1253
 
-        //         book: {
+    //         }
 
-        //             id: 1, // Primary Key
-        //             isbn: 1253
+    //     },
 
-        //         }
+    //     bookshelf_book: {
 
-        //     },
+    //         id: 2, // Primary Key
+    //         book_id: 2,
+    //         bookshelf_id: 1,
 
-        //     bookshelf_book: {
+    //         book: {
 
-        //         id: 2, // Primary Key
-        //         book_id: 2,
-        //         bookshelf_id: 1,
+    //             id: 2, // Primary Key
+    //             isbn: 8723
 
-        //         book: {
+    //         }
 
-        //             id: 2, // Primary Key
-        //             isbn: 8723
+    //     }
+    // },
 
-        //         }
+    // {
 
-        //     }
-        // },
+    //     id: 2, // Primary Key
+    //     shelf_name: 'Fun',
+    //     user_id: 1,
+    //     user_type: 'Creator', // Idea💡: we could use the values Creator / Author or Viewer / Reader ( for editing privileges )
 
-        // {
-            
-        //     id: 2, // Primary Key
-        //     shelf_name: 'Fun',
-        //     user_id: 1,
-        //     user_type: 'Creator', // Idea💡: we could use the values Creator / Author or Viewer / Reader ( for editing privileges )
+    //     bookshelf_book: {
 
-        //     bookshelf_book: {
+    //         id: 1, // Primary Key
+    //         book_id: 1,
+    //         bookshelf_id: 2,
 
-        //         id: 1, // Primary Key
-        //         book_id: 1,
-        //         bookshelf_id: 2,
+    //         book: {
 
-        //         book: {
+    //             id: 1, // Primary Key
+    //             isbn: 6301
 
-        //             id: 1, // Primary Key
-        //             isbn: 6301
+    //         }
 
-        //         }
+    //     },
 
-        //     },
+    //     bookshelf_book: {
 
-        //     bookshelf_book: {
+    //         id: 2, // Primary Key
+    //         book_id: 2,
+    //         bookshelf_id: 2,
 
-        //         id: 2, // Primary Key
-        //         book_id: 2,
-        //         bookshelf_id: 2,
+    //         book: {
 
-        //         book: {
+    //             id: 2, // Primary Key
+    //             isbn: 1287
 
-        //             id: 2, // Primary Key
-        //             isbn: 1287
+    //         }
 
-        //         }
+    //     }
+    // }
 
-        //     }
-        // }
+    // TESTING
 
-        // TESTING
+    {
+      id: 1, // Primary Key
+      shelf_name: "Plilosophy",
+      user_id: 1,
+      user_type: "Creator",
 
+      bookshelf_books: [
         {
-            id: 1, // Primary Key
-            shelf_name: 'Plilosophy',
-            user_id: 1,
-            user_type: 'Creator',
-
-            bookshelf_books: [
-
-                {
-                    id: 1,
-                    book_id: 1,
-                    bookshelf_id: 1,
-                    isbn: 1253
-                }
-            ],
-        },
-
-        {
-            id: 2, // Primary Key
-            shelf_name: 'Fun',
-            user_id: 1,
-            user_type: 'Creator',
-
-            bookshelf_books: [
-
-                {
-                    id: 1,
-                    book_id: 1,
-                    bookshelf_id: 2,
-                    isbn: 1045
-                },
-                {
-                    id: 2,
-                    book_id: 2,
-                    bookshelf_id: 2,
-                    isbn: 7394
-                }
-            ],
+          id: 1,
+          book_id: 1,
+          bookshelf_id: 1,
+          isbn: 1253
         }
+      ]
+    },
 
+    {
+      id: 2, // Primary Key
+      shelf_name: "Fun",
+      user_id: 1,
+      user_type: "Creator",
 
-    
-    ]
-
-}
+      bookshelf_books: [
+        {
+          id: 1,
+          book_id: 1,
+          bookshelf_id: 2,
+          isbn: 1045
+        },
+        {
+          id: 2,
+          book_id: 2,
+          bookshelf_id: 2,
+          isbn: 7394
+        }
+      ]
+    }
+  ]
+};
 
 const Profile = props => {
+  return (
+    <ProfileContainer>
+      <BackgroundImageContainer>
+        <BackgroundImage src={user.banner_image} />
+      </BackgroundImageContainer>
 
-    return(
+      <div className="Section Profile">
+        <img className="ProfilePicture" src={user.image} />
+      </div>
 
-        <ProfileContainer>
+      <UserInfoContainer>
+        <div className="Section User">
+          <h1 className="Name">
+            {user.firstName} {user.lastName}
+          </h1>
+          <p className="Location">{user.location}</p>
+        </div>
 
-            <BackgroundImageContainer>
+        <div className="Section Social">
+          <div>
+            <h1>{user.followers}</h1>
+            <p>Followers</p>
+          </div>
 
-                <BackgroundImage src = { user.banner_image }/>
+          <div>
+            <h1>{user.following}</h1>
+            <p>Following</p>
+          </div>
+        </div>
 
-            </BackgroundImageContainer>
+        <div className="Section Buttons">
+          <button className="Follow">Follow</button>
+          <button className="Message">Message</button>
+        </div>
+      </UserInfoContainer>
 
-            <div className = 'Section Profile'>
-
-                <img className = 'ProfilePicture' src = { user.image }/>
-
+      <BookshelvesAndActivityContainer>
+        <Bookshelves>
+          <h2>{user.firstName}'s Bookshelves</h2>
+          {user.user_bookshelves.map(book => (
+            <div className="SingleBookshelf">
+              <p>{book.shelf_name}</p>
+              <p>{book.bookshelf_books.length}</p>
             </div>
+          ))}
+        </Bookshelves>
 
-            <UserInfoContainer>
-
-
-                <div className = 'Section User'>
-
-                    <h1 className = 'Name'>{ user.firstName } { user.lastName }</h1>
-                    <p className = 'Location'>{ user.location }</p>
-
-                </div>
-
-                <div className = 'Section Social'>
-
-                    <div>
-
-                        <h1>{ user.followers }</h1>
-                        <p>Followers</p>
-
-                    </div>
-
-                    <div>
-
-                        <h1>{ user.following }</h1>
-                        <p>Following</p>
-
-                    </div>
-
-                </div>
-
-                <div className = 'Section Buttons'>
-
-                    <button className = 'Follow'>Follow</button>
-                    <button className = 'Message'>Message</button>
-
-                </div>
-
-            </UserInfoContainer>
-
-
-            <BookshelvesAndActivityContainer>
-            
-                <Bookshelves>
-
-                    <h2>{ user.firstName }'s Bookshelves</h2>
-                    { user.user_bookshelves.map( book =>
-
-                        <div className = 'SingleBookshelf'>
-                            <p>{ book.shelf_name }</p>
-                            <p>{ book.bookshelf_books.length }</p>
-                        </div>
-
-                    )}
-
-                </Bookshelves>
-
-                <Activity>
-
-                    <h1>Activity</h1>
-
-                </Activity>
-            
-            </BookshelvesAndActivityContainer>
-
-        </ProfileContainer>
-
-    )
-
+        <Activity>
+          <h1>Activity</h1>
+        </Activity>
+      </BookshelvesAndActivityContainer>
+    </ProfileContainer>
+  );
 };
 
 const ProfileContainer = styled.div`
+  // Constants ⬇︎
+  min-height: 90vh;
+  max-width: 1500px;
+  margin: 0 auto;
 
-    // Constants ⬇︎
-    min-height: 90vh;
-    max-width: 1500px;
-    margin: 0 auto;
-
-    // MOBILE ( Small ) STYLES ⬇︎
-    @media screen and ${ device.mobileS } {
-
-        .Section.Profile {
-
-            position: absolute;
-            width: 125px;
-            height: 125px;
-            overflow: hidden;
-            border-radius: 50%;
-            border: 1px solid white;
-            margin-top: -66px;
-            margin-left: 3vh;
-
-        }
-
-        .ProfilePicture {
-
-            width: 100%;
-            height: auto;
-
-        }
-
+  // MOBILE ( Small ) STYLES ⬇︎
+  @media screen and ${device.mobileS} {
+    .Section.Profile {
+      position: absolute;
+      width: 125px;
+      height: 125px;
+      overflow: hidden;
+      border-radius: 50%;
+      border: 1px solid white;
+      margin-top: -66px;
+      margin-left: 3vh;
     }
 
-    // TABLET STYLES ⬇︎
-    @media screen and ${ device.tablet } {
+    .ProfilePicture {
+      width: 100%;
+      height: auto;
+    }
+  }
 
-        .Section.Profile {
-
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            overflow: hidden;
-            border-radius: 50%;
-            border: 1px solid white;
-            margin-top: -75px;
-            margin-left: 25px;
-
-        }
-
-        .ProfilePicture {
-
-            width: 100%;
-            height: auto;
-
-        }
+  // TABLET STYLES ⬇︎
+  @media screen and ${device.tablet} {
+    .Section.Profile {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      overflow: hidden;
+      border-radius: 50%;
+      border: 1px solid white;
+      margin-top: -75px;
+      margin-left: 25px;
     }
 
-    // LAPTOP STYLES ⬇︎
-    @media screen and ${ device.laptop } {
+    .ProfilePicture {
+      width: 100%;
+      height: auto;
+    }
+  }
 
-
-        h1 {
-            margin: 5px;
-        }
-
-        p {
-            margin: 10px;
-            color: rgb( 171, 171, 171 );
-        }
-
-        .Section.Profile {
-
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            overflow: hidden;
-            border-radius: 50%;
-            border: 1px solid white;
-            margin-top: -100px;
-            margin-left: 50px;
-
-        }
-
-        .ProfilePicture {
-
-            width: 100%;
-            height: auto;
-
-        }
-
+  // LAPTOP STYLES ⬇︎
+  @media screen and ${device.laptop} {
+    h1 {
+      margin: 5px;
     }
 
+    p {
+      margin: 10px;
+      color: rgb(171, 171, 171);
+    }
+
+    .Section.Profile {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      overflow: hidden;
+      border-radius: 50%;
+      border: 1px solid white;
+      margin-top: -100px;
+      margin-left: 50px;
+    }
+
+    .ProfilePicture {
+      width: 100%;
+      height: auto;
+    }
+  }
 `;
 
 const BackgroundImageContainer = styled.div`
+  // MOBILE ( Small ) STYLES ⬇︎
+  @media screen and ${device.mobileS} {
+    width: 100%;
+    overflow: hidden;
+  }
 
-    // MOBILE ( Small ) STYLES ⬇︎
-    @media screen and ${ device.mobileS } {
+  // TABLET STYLES ⬇︎
+  @media screen and ${device.tablet} {
+    width: 100%;
+    height: auto;
+  }
 
-        width: 100%;
-        overflow: hidden;
-
-    }
-
-    // TABLET STYLES ⬇︎
-    @media screen and ${ device.tablet } {
-
-        width: 100%;
-        height: auto;
-
-    }
-
-    // LAPTOP STYLES ⬇︎
-    @media screen and ${ device.laptop } {
-
-        width: 100%;
-        height: 400px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-    }
-
+  // LAPTOP STYLES ⬇︎
+  @media screen and ${device.laptop} {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const BackgroundImage = styled.img`
+  // MOBILE ( Small ) STYLES ⬇︎
+  @media screen and ${device.mobileS} {
+    width: auto;
+    height: 300px;
+  }
 
-    // MOBILE ( Small ) STYLES ⬇︎
-    @media screen and ${ device.mobileS } {
+  // TABLET STYLES ⬇︎
+  @media screen and ${device.tablet} {
+    width: 100%;
+    height: auto;
+  }
 
-        width: auto;
-        height: 300px;
-
-    }
-
-    // TABLET STYLES ⬇︎
-    @media screen and ${ device.tablet } {
-
-        width: 100%;
-        height: auto;
-
-    }
-
-    // LAPTOP STYLES ⬇︎
-    @media screen and ${ device.laptop } {
-
-        width: auto;
-        height: auto;
-        min-height: 400px;
-
-    }
-
+  // LAPTOP STYLES ⬇︎
+  @media screen and ${device.laptop} {
+    width: auto;
+    height: auto;
+    min-height: 400px;
+  }
 `;
 
 const UserInfoContainer = styled.div`
+  // MOBILE ( Small ) STYLES ⬇︎
+  @media screen and ${device.mobileS} and (max-width: ${size.mobileL}) {
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
 
-    // MOBILE ( Small ) STYLES ⬇︎
-    @media screen and ${ device.mobileS } and ( max-width: ${ size.mobileL } ) {
+    .Section.User {
+      width: 90%;
+      margin: 0 auto;
+      border-bottom: 1px solid white;
 
-        display: flex;
-        flex-wrap: wrap;
-        color: white;
+      .Name {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-left: 165px;
+      }
 
-        .Section.User {
-            
-            width: 90%;
-            margin: 0 auto;
-            border-bottom: 1px solid white;
-            
-            .Name {
-
-                margin-top: 0px;
-                margin-bottom: 0px;
-                margin-left: 165px;
-
-            }
-
-            .Location {
-
-                margin-top: 0px;
-                margin-left: 165px;
-
-            }
-
-        }
-
-        .Section.Social {
-
-            display: flex;
-            width: 50%;
-            justify-content: space-evenly;
-            align-items: center;
-
-            h1 {
-                margin: 0px;
-            }
-
-            p {
-                margin: 0px;
-                color: rgb( 171, 171, 171 );
-            }
-        }
-
-        .Section.Buttons {
-
-            width: 45%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            align-items: center;
-            
-            button {
-
-                font-size: 18px;
-                width: 100px;
-                margin: 5px;
-                border-radius: 5px;
-
-            }
-
-            button.Follow {
-
-                background-color: rgb(105,121,248);
-                border: 1px solid rgb(105,121,248);
-
-            }
-
-            button.Message {
-
-                border: 1px solid rgb(105,121,248);
-
-            }
-
-        }
-
+      .Location {
+        margin-top: 0px;
+        margin-left: 165px;
+      }
     }
 
-    // TABLET STYLES ⬇︎
-    @media screen and ${ device.mobileL } and ( max-width: ${ size.laptop } )  {
+    .Section.Social {
+      display: flex;
+      width: 50%;
+      justify-content: space-evenly;
+      align-items: center;
 
-        display: flex;
-        margin: 0 auto;
-        margin-left: 200px;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        margin-bottom: 50px;
-        border: none;
-        align-items: center;
+      h1 {
+        margin: 0px;
+      }
 
-        .Section {
-
-            color: white;
-            width: 30%;
-
-        }
-
-        .Section.User {
-        
-            margin: 0 auto;
-            
-            .Name {
-
-                margin: 0px;
-
-            }
-
-            .Location {
-
-                margin: 0px;
-                color: rgb( 171, 171, 171 );
-
-            }
-
-        }
-
-        .Section.Social {
-
-            display: flex;
-            width: 50%;
-            justify-content: space-evenly;
-            align-items: center;
-
-            h1 {
-                margin: 0px;
-            }
-
-            p {
-                margin: 0px;
-                color: rgb( 171, 171, 171 );
-            }
-        }
-
-        .Section.Buttons {
-
-            width: 45%;
-            display: flex;
-            justify-content: space-batween;
-            align-items: center;
-            
-            button {
-
-                font-size: 18px;
-                width: 100px;
-                margin: 5px;
-                border-radius: 5px;
-
-            }
-
-            button.Follow {
-
-                background-color: rgb(105,121,248);
-                border: 1px solid rgb(105,121,248);
-
-            }
-
-            button.Message {
-
-                border: 1px solid rgb(105,121,248);
-
-            }
-
-        }
-
+      p {
+        margin: 0px;
+        color: rgb(171, 171, 171);
+      }
     }
 
-    // LAPTOP STYLES ⬇︎
-    @media screen and ${ device.laptop } {
+    .Section.Buttons {
+      width: 45%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
 
-        display: flex;
-        margin: 0 auto;
-        margin-left: 250px;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        margin-bottom: 50px;
-        border: none;
-        width: 75%;
-        align-items: center;
+      button {
+        font-size: 18px;
+        width: 100px;
+        margin: 5px;
+        border-radius: 5px;
+      }
 
-        .Section {
+      button.Follow {
+        background-color: rgb(105, 121, 248);
+        border: 1px solid rgb(105, 121, 248);
+      }
 
-            color: white;
-            width: 30%;
+      button.Message {
+        border: 1px solid rgb(105, 121, 248);
+      }
+    }
+  }
 
-        }
+  // TABLET STYLES ⬇︎
+  @media screen and ${device.mobileL} and (max-width: ${size.laptop}) {
+    display: flex;
+    margin: 0 auto;
+    margin-left: 200px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    border: none;
+    align-items: center;
 
-        .Section.Social {
-
-            display: flex;
-            width: 400px;
-            justify-content: space-evenly;
-
-        }
-
-        .Buttons {
-
-            display: flex;
-            width: 400px;
-            justify-content: space-evenly;
-            align-items: center;
-            transition: .5s;
-
-            button {
-
-                font-size: 25px;
-                height: 50px;
-                min-width: 100px;
-                border-radius: 10px;
-                border: 1px solid rgb(105,121,248);
-
-            }
-
-            button.Follow {
-
-                background-color: rgb(105,121,248);
-
-            }
-
-            button:hover {
-
-                cursor: pointer;
-                border: 1px solid rgb(33,33,33);
-                transition: .5s;
-
-            }
-        }
-
+    .Section {
+      color: white;
+      width: 30%;
     }
 
+    .Section.User {
+      margin: 0 auto;
+
+      .Name {
+        margin: 0px;
+      }
+
+      .Location {
+        margin: 0px;
+        color: rgb(171, 171, 171);
+      }
+    }
+
+    .Section.Social {
+      display: flex;
+      width: 50%;
+      justify-content: space-evenly;
+      align-items: center;
+
+      h1 {
+        margin: 0px;
+      }
+
+      p {
+        margin: 0px;
+        color: rgb(171, 171, 171);
+      }
+    }
+
+    .Section.Buttons {
+      width: 45%;
+      display: flex;
+      justify-content: space-batween;
+      align-items: center;
+
+      button {
+        font-size: 18px;
+        width: 100px;
+        margin: 5px;
+        border-radius: 5px;
+      }
+
+      button.Follow {
+        background-color: rgb(105, 121, 248);
+        border: 1px solid rgb(105, 121, 248);
+      }
+
+      button.Message {
+        border: 1px solid rgb(105, 121, 248);
+      }
+    }
+  }
+
+  // LAPTOP STYLES ⬇︎
+  @media screen and ${device.laptop} {
+    display: flex;
+    margin: 0 auto;
+    margin-left: 250px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    border: none;
+    width: 75%;
+    align-items: center;
+
+    .Section {
+      color: white;
+      width: 30%;
+    }
+
+    .Section.Social {
+      display: flex;
+      width: 400px;
+      justify-content: space-evenly;
+    }
+
+    .Buttons {
+      display: flex;
+      width: 400px;
+      justify-content: space-evenly;
+      align-items: center;
+      transition: 0.5s;
+
+      button {
+        font-size: 25px;
+        height: 50px;
+        min-width: 100px;
+        border-radius: 10px;
+        border: 1px solid rgb(105, 121, 248);
+      }
+
+      button.Follow {
+        background-color: rgb(105, 121, 248);
+      }
+
+      button:hover {
+        cursor: pointer;
+        border: 1px solid rgb(33, 33, 33);
+        transition: 0.5s;
+      }
+    }
+  }
 `;
 
-
 const BookshelvesAndActivityContainer = styled.div`
+  // MOBILE ( Small ) STYLES ⬇︎
+  @media screen and ${device.mobileS} {
+    display: flex;
+    flex-direction: column;
+  }
 
-    // MOBILE ( Small ) STYLES ⬇︎
-    @media screen and ${ device.mobileS } {
-        
-        display: flex;
-        flex-direction: column;
-        
-    }
+  // TABLET STYLES ⬇︎
+  @media screen and ${device.tablet} {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
 
-    // TABLET STYLES ⬇︎
-    @media screen and ${ device.tablet } {
-        
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 90%;
-        margin: 0 auto;
-        margin-top: 20px;
-        
-    }
-
-    // LAPTOP STYLES ⬇︎
-    @media screen and ${ device.laptop } {
-
-        display: flex;
-        width: 90%;
-        margin: 0 auto;
-        justify-content: space-between;
-
-    }
-
+  // LAPTOP STYLES ⬇︎
+  @media screen and ${device.laptop} {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+    justify-content: space-between;
+  }
 `;
 
 const Bookshelves = styled.div`
 
     // MOBILE ( Small ) STYLES ⬇︎
-    @media screen and ${ device.mobileS } {
+    @media screen and ${device.mobileS} {
 
         width: 90%;
         margin: 0 auto;
@@ -777,7 +563,7 @@ const Bookshelves = styled.div`
     }
 
     // TABLET STYLES ⬇︎
-    @media screen and ${ device.tablet } {
+    @media screen and ${device.tablet} {
 
         width: 30%;
         height: 100%;
@@ -786,7 +572,7 @@ const Bookshelves = styled.div`
     }
 
     // LAPTOP STYLES ⬇︎
-    @media screen and ${ device.laptop } {
+    @media screen and ${device.laptop} {
 
         display: flex;
         flex-direction column;
@@ -834,35 +620,27 @@ const Bookshelves = styled.div`
 `;
 
 const Activity = styled.div`
+  // MOBILE ( Small ) STYLES ⬇︎
+  @media screen and ${device.mobileS} {
+    width: 90%;
+    margin: 0 auto;
+    min-height: 60vh;
+  }
 
-    // MOBILE ( Small ) STYLES ⬇︎
-    @media screen and ${ device.mobileS } {
+  // TABLET STYLES ⬇︎
+  @media screen and ${device.tablet} {
+    width: 60%;
+  }
 
-        width: 90%;
-        margin: 0 auto;
-        min-height: 60vh;
-
-    }
-
-    // TABLET STYLES ⬇︎
-    @media screen and ${ device.tablet } {
-
-        width: 60%;
-
-    }
-
-    // LAPTOP STYLES ⬇︎
-    @media screen and ${ device.laptop } {
-
-        display: flex;
-        width: 66%;
-        justify-content: center;
-        border: 1px solid white;
-        min-height: 100vh;
-        margin-bottom: 50px;
-
-    }
-
+  // LAPTOP STYLES ⬇︎
+  @media screen and ${device.laptop} {
+    display: flex;
+    width: 66%;
+    justify-content: center;
+    border: 1px solid white;
+    min-height: 100vh;
+    margin-bottom: 50px;
+  }
 `;
 
 export default Profile;
