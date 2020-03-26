@@ -9,7 +9,7 @@ import config from './app.config';
 import HomePage from './Components/Homepage';
 import NavBar from './Components/NavBar';
 import Profile from './Components/Profile';
-import Login from './Components/Login';
+import LoginView from './Components/LoginView';
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
       <NavBar />
       {/* Loading Components based off a NavLink in NavBar */}
       <Route path="/" exact={true} component={HomePage} />
-          <Route path="/login" render={() => <Login baseUrl={config.url} />} />
+      <Route path="/login" render={() => <LoginView baseUrl={config.url} />} />
       <Route path="/implicit/callback" component={ImplicitCallback} />
       <SecureRoute path="/profile" component={Profile} />
     </div>
