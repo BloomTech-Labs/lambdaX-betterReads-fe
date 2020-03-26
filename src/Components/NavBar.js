@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Route, NavLink } from 'react-router-dom';
-import WithAuth from './WithAuth';
+import { NavLink } from 'react-router-dom';
 import LoginButton from './LoginButton';
 import BetterReadsLogo from '../Images/BetterReadsLogo.jpeg';
 import styled from 'styled-components';
-import { size , device } from '../breakpoints';
+import { size, device } from '../breakpoints';
 
 function NavBar() {
-  const [isAuthenticated, setAuth] = useState(false);
   const [search, setSearch] = useState('');
 
   function handleSearch(e) {
@@ -17,10 +15,18 @@ function NavBar() {
   return (
     <Routes>
       <Logo src={BetterReadsLogo} />
-
-      <NavLink exact to="/"> Bookshelves </NavLink>
-      <NavLink exact to="/"> Discover </NavLink>
-      <NavLink exact to="/profile"> Profile </NavLink>
+      <NavLink exact to="/">
+        {' '}
+        Bookshelves{' '}
+      </NavLink>
+      <NavLink exact to="/">
+        {' '}
+        Discover{' '}
+      </NavLink>
+      <NavLink exact to="/profile">
+        {' '}
+        Profile{' '}
+      </NavLink>
       <LoginButton />
 
       <input
@@ -39,17 +45,13 @@ function NavBar() {
 }
 
 const Routes = styled.div`
-
   // Mobile ( Small ) STYLES ⬇︎
-  @media screen and ${ device.mobileS } and ( max-width: ${ size.laptop } ) {
-
+  @media screen and (${device.mobileS}) and (max-width: ${size.laptop}) {
     display: none;
-
   }
 
   // LAPTOP STYLES ⬇︎
-  @media screen and ${ device.laptop } {
-
+  @media screen and (${device.laptop}) {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -58,19 +60,16 @@ const Routes = styled.div`
     margin: 10px 0px 10px 0px;
 
     a {
-
       padding: 10px;
       color: white;
-      text-decoration-color: rgb(22,35,43);
+      text-decoration-color: rgb(22, 35, 43);
 
       .active {
         color: red;
       }
-
     }
 
     input {
-
       width: 150px;
       height: 25px;
       display: flex;
@@ -78,11 +77,8 @@ const Routes = styled.div`
       border-radius: 5px;
       border: none;
       outline: none;
-
     }
-
   }
-
 `;
 
 const ProfileImage = styled.img`
@@ -97,7 +93,6 @@ const ProfileImage = styled.img`
 const Logo = styled.img`
   height: 50px;
   width: 50px;
-
 `;
 
 export default NavBar;
