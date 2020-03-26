@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { withAuth } from '@okta/okta-react';
 import OktaSignInWidget from './OktaSignInWidget';
@@ -20,18 +21,23 @@ function Login(props) {
     checkAuth();
   }, [authenticated]);
 
-  const onSuccess = (res) => {
+  const onSuccess = res => {
     if (res.status === 'SUCCESS') {
-      return props.auth.redirect({
-        sessionToken: res.session.token,
-      });
+      axios
+        .post('/', res.user)
+        .then(() => {
+          return props.auth.redirect({
+            sessionToken: res.session.token,
+          });
+        })
+        .catch(err => console.log(err));
     } else {
       console.log(res.user);
       return;
     }
   };
 
-  const onError = (err) => {
+  const onError = err => {
     console.log('error logging in', err);
   };
 
