@@ -31,7 +31,7 @@ const RegistrationView = props => {
     console.log('SUBMITTED');
     const user = { firstName, lastName, email, password };
     axios
-      .post(`${apiUri}/`, user)
+      .post(`${apiUri}/register`, user)
       .then(user => {
         oktaAuth
           .signIn({ username: email, password: password })
