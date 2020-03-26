@@ -10,7 +10,7 @@ import HomePage from './Components/Homepage';
 import NavBar from './Components/NavBar';
 import Profile from './Components/Profile';
 import LoginView from './Components/LoginView';
-
+import RegistrationForm from './Components/RegistrationForm';
 
 function App() {
   return (
@@ -19,6 +19,10 @@ function App() {
       {/* Loading Components based off a NavLink in NavBar */}
       <Route path="/" exact={true} component={HomePage} />
       <Route path="/login" render={() => <LoginView baseUrl={config.url} />} />
+      <Route
+        path="/register"
+        render={() => <RegistrationForm baseUrl={config.url} />}
+      />
       <Route path="/implicit/callback" component={ImplicitCallback} />
       <SecureRoute path="/profile" component={Profile} />
     </div>
