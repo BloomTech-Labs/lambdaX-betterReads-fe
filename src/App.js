@@ -1,54 +1,32 @@
-import React from "react";
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
-import "./App.css";
-
+import React from 'react';
+import { Route } from 'react-router-dom';
+import './App.css';
 // Okta
-import { Security, ImplicitCallback  } from "@okta/okta-react";
+import { SecureRoute, ImplicitCallback } from '@okta/okta-react';
+import config from './app.config';
 
 // Componentss
-import HomePage from "./Components/Homepage";
-import WithAuth from "./Components/WithAuth";
-import NavBar from "./Components/NavBar";
-import Profile from "./Components/Profile";
-import withAuth from "@okta/okta-react/dist/withAuth";
-
-// Okta config object
-const config = {
-  issuer: "https://dev-640497.okta.com/oauth2/default",
-  redirectUri: window.location.origin + "/implicit/callback",
-  clientId: "0oa274tam6nSE47LW4x6",
-  pkce: true,
-  tokenManager: {
-    storage: 'sessionStorage'
-  }
-};
+import HomePage from './Components/Homepage';
+import NavBar from './Components/NavBar';
+import Profile from './Components/Profile';
+import LoginView from './Components/LoginView';
+import RegistrationForm from './Components/RegistrationForm';
 
 function App() {
-
   return (
-
     <div className="App">
-
-      <Router>
-
-
-        <Security {...config}>
-
-          <NavBar/>
-
-          {/* Loading Components based off a NavLink in NavBar */}
-          <Route path="/" exact={true} component={ HomePage } />
-          <Route path="/implicit/callback" component={ ImplicitCallback } />
-          <Route path='/Profile' component = { Profile }/>
-
-        </Security>
-
-      </Router>
-
+      <NavBar />
+      {/* Loading Components based off a NavLink in NavBar */}
+      <Route path="/" exact={true} component={HomePage} />
+      <Route path="/login" render={() => <LoginView baseUrl={config.url} />} />
+      <Route
+        path="/register"
+        render={() => <RegistrationForm baseUrl={config.url} />}
+      />
+      <Route path="/implicit/callback" component={ImplicitCallback} />
+      <SecureRoute path="/profile" component={Profile} />
     </div>
-
   );
-
 }
 
 export default App;
