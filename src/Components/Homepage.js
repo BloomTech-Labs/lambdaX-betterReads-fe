@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import LandingPage from './LandingPage.js';
 
 const HomePage = (props) => {
   return (
     <HomeContainer>
       <Nav></Nav>
-      <h1>HOME</h1>
+      <LandingPage />
     </HomeContainer>
   );
 };
